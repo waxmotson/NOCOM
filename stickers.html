@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NOCOM</title>
+<style>
+  html, body { margin: 0; min-height: 100%; background: #fff; }
+  #board {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+    gap: 1.5rem; padding: 3rem 2rem; box-sizing: border-box; min-height: 100vh;
+  }
+  .sticker {
+    width: clamp(110px, 16vw, 220px); height: auto; display: block;
+    border: 6px solid #fff; border-radius: 14px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.12), 0 6px 14px rgba(0,0,0,.28);
+    transform: rotate(var(--r)) translate(var(--x), var(--y));
+    transition: transform .15s ease;
+  }
+  .sticker:hover { transform: rotate(0) scale(1.08); z-index: 1; }
+</style>
+</head>
+<body>
+<div id="board"></div>
+<script>
+const EXT = /\.(png|jpe?g|gif|webp|avif|svg|bmp)$/i;
+const board = document.getElementById('board');
+
+// Manifest (images.json) is kept up to date by .github/workflows/manifest.yml;
+// fall back to parsing a server directory listing (works on most local servers).
+async function listImages() {
+  try {
+    const r = await fetch('images.json', { cache: 'no-cache' });
+    if (r.ok) return await r.json();
+  } catch (e) {}
+  try {
+    const r = await fetch('static/');
+    const doc = new DOMParser().parseFromString(await r.text(), 'text/html');
+    return [...doc.querySelectorAll('a')]
+      .map(a => decodeURIComponent(a.getAttribute('href').split('/').pop()))
+      .filter(n => EXT.test(n));
+  } catch (e) { return []; }
+}
+
+// stable pseudo-random per filename so stickers don't jump around on reload
+function rand(str, salt) {
+  let h = 2166136261 ^ salt;
+  for (const c of str) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  return ((h >>> 0) % 10000) / 10000;
+}
+
+listImages().then(names => {
+  names.filter(n => EXT.test(n)).sort().forEach(name => {
+    const img = new Image();
+    img.className = 'sticker';
+    img.alt = '';
+    img.src = 'static/' + encodeURIComponent(name);
+    img.style.setProperty('--r', (rand(name, 1) * 24 - 12).toFixed(1) + 'deg');
+    img.style.setProperty('--x', (rand(name, 2) * 20 - 10).toFixed(0) + 'px');
+    img.style.setProperty('--y', (rand(name, 3) * 20 - 10).toFixed(0) + 'px');
+    board.appendChild(img);
+  });
+});
+</script>
+</body>
+</html>

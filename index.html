@@ -3,64 +3,173 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NOCOM</title>
+<title>I like horses</title>
 <style>
-  html, body { margin: 0; min-height: 100%; background: #fff; }
-  #board {
-    display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-    gap: 1.5rem; padding: 3rem 2rem; box-sizing: border-box; min-height: 100vh;
+  :root {
+    --teal: #0b7a78;
+    --panel: #b9b1a4;
+    --ink: #111;
+    --link: #1a1aa6;
+    --bar1: #1d2b6b;
+    --bar2: #aab6d8;
   }
-  .sticker {
-    width: clamp(110px, 16vw, 220px); height: auto; display: block;
-    border: 6px solid #fff; border-radius: 14px;
-    box-shadow: 0 0 0 1px rgba(0,0,0,.12), 0 6px 14px rgba(0,0,0,.28);
-    transform: rotate(var(--r)) translate(var(--x), var(--y));
-    transition: transform .15s ease;
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #fff; }
+  body { font: 13px/1.35 Verdana, Tahoma, Arial, sans-serif; color: var(--ink); position: relative; overflow-x: hidden; }
+  a { color: var(--link); font-weight: bold; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  #page {
+    width: 740px; max-width: 100%; margin: 16px auto; padding: 8px;
+    background: var(--teal); border-radius: 6px 6px 0 0;
   }
-  .sticker:hover { transform: rotate(0) scale(1.08); z-index: 1; }
+  .panel, .bar {
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, transparent 1px 3px),
+      var(--panel);
+    border: 2px solid #ece7dc; border-right-color: #6f685c; border-bottom-color: #6f685c;
+  }
+  .title {
+    margin: 0; padding: 2px 6px; color: #fff; font-size: 12px; font-weight: bold;
+    background: linear-gradient(90deg, var(--bar1), var(--bar2));
+  }
+  .bar { padding: 0; margin-bottom: 10px; }
+  .bar nav { display: flex; flex-wrap: wrap; gap: 2px 0; padding: 4px 6px; font-size: 11px; }
+  .bar nav a { color: #000; padding: 0 8px; border-left: 1px solid #6f685c; }
+  .bar nav a:first-child { border-left: 0; }
+
+  .cols { display: grid; grid-template-columns: 280px 1fr; gap: 10px; align-items: start; }
+  .col { display: grid; gap: 10px; }
+  .panel .body { padding: 6px 8px; }
+  .panel { margin: 0; }
+
+  .profile { display: flex; gap: 10px; padding: 6px; }
+  .profile img { width: 130px; height: 130px; object-fit: cover; border: 1px solid #000; background: #fff; }
+  .profile .quote { font-size: 12px; }
+  .online { display: inline-block; margin-top: 6px; padding: 0 5px; background: #fff; border: 1px solid #777; border-radius: 4px; font-size: 11px; }
+
+  .links { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 6px; padding: 8px; }
+  table.interests { width: 100%; border-collapse: collapse; }
+  table.interests td { padding: 5px 8px; vertical-align: top; border-top: 1px solid #8a8376; }
+  table.interests td:first-child { width: 70px; }
+  .blue { color: #3a3acb; }
+  .center { text-align: center; padding: 18px 8px; }
+  .hot { color: #c00; font-weight: bold; }
+
+  .friends { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; padding: 8px; }
+  .friends img { width: 80px; height: 80px; object-fit: cover; background: #fff; display: block; margin: 2px auto 0; }
+
+  /* horse stickers overlaid on the page, where the stars would be */
+  .overlay-sticker {
+    position: absolute; width: 56px; height: auto; pointer-events: none;
+    opacity: .55; mix-blend-mode: multiply; z-index: 5;
+  }
+
+  @media (max-width: 720px) { .cols { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<div id="board"></div>
+
+<div id="page">
+  <div class="bar">
+    <h1 class="title" style="font-size:12px">horses - Microsoft Internet Explorer</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="stickers.html">Stickers</a>
+      <a href="#about">About</a>
+      <a href="#interests">Interests</a>
+      <a href="#friends">Friends</a>
+    </nav>
+  </div>
+
+  <div class="cols">
+    <div class="col">
+      <div class="panel"><h2 class="title">Horse Lover</h2></div>
+
+      <div class="panel profile">
+        <img src="assets/profile.png" alt="profile picture">
+        <div>
+          <div class="quote">"neigh"</div>
+          <span class="online">ONLINE</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 class="title">Mood</h2>
+        <div class="body"><b>Mood:</b> <span class="blue">gallop-y</span><br><br>
+          View my: <a href="stickers.html">Stickers</a> | <a href="#about">Blurbs</a></div>
+      </div>
+
+      <div class="panel">
+        <h2 class="title">Contacting Horse Lover</h2>
+        <div class="links">
+          <a href="stickers.html">Add to Friends</a>
+          <a href="stickers.html">Add to Favorites</a>
+          <a href="stickers.html">Send Message</a>
+          <a href="stickers.html">Forward to Friend</a>
+        </div>
+      </div>
+
+      <div class="panel" id="interests">
+        <h2 class="title">Horse Lover's Interests</h2>
+        <table class="interests">
+          <tr><td>General</td><td class="blue">Lorem ipsum dolor sit amet, horses consectetur adipiscing elit, sed do eiusmod tempor.</td></tr>
+          <tr><td>Music</td><td class="blue">Hoofbeats, ut labore et dolore magna aliqua, more hoofbeats.</td></tr>
+          <tr><td>Heroes</td><td class="blue">Every horse, ut enim ad minim veniam.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="panel center" style="padding:30px 8px"><a href="stickers.html">Check out my stickers</a></div>
+
+      <div class="panel" id="about">
+        <h2 class="title">Horse Lover's Blurbs</h2>
+        <div class="body">
+          <b>About me:</b>
+          <p class="blue">Lorem ipsum dolor sit amet, I like horses consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Horses ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo horses consequat.</p>
+          <b>Who I'd like to meet:</b>
+          <p class="blue">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore horses eu fugiat nulla pariatur. Other horse people, excepteur sint occaecat cupidatat non proident.</p>
+        </div>
+      </div>
+
+      <div class="panel" id="friends">
+        <h2 class="title">Horse Lover's Friend Space</h2>
+        <div class="body">Horse Lover has <span class="hot">many</span> friends. Lorem ipsum, they are all horses.</div>
+      </div>
+
+      <div class="panel">
+        <h2 class="title">Horse Lover's Friends Comments</h2>
+        <div class="body"><b>Displaying <span class="hot">0</span> of <span class="hot">0</span> comments</b> ( <a href="stickers.html">View all</a> | <a href="stickers.html">Add Comment</a> )</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-const EXT = /\.(png|jpe?g|gif|webp|avif|svg|bmp)$/i;
-const board = document.getElementById('board');
-
-// Manifest (images.json) is kept up to date by .github/workflows/manifest.yml;
-// fall back to parsing a server directory listing (works on most local servers).
-async function listImages() {
-  try {
-    const r = await fetch('images.json', { cache: 'no-cache' });
-    if (r.ok) return await r.json();
-  } catch (e) {}
-  try {
-    const r = await fetch('static/');
-    const doc = new DOMParser().parseFromString(await r.text(), 'text/html');
-    return [...doc.querySelectorAll('a')]
-      .map(a => decodeURIComponent(a.getAttribute('href').split('/').pop()))
-      .filter(n => EXT.test(n));
-  } catch (e) { return []; }
-}
-
-// stable pseudo-random per filename so stickers don't jump around on reload
-function rand(str, salt) {
-  let h = 2166136261 ^ salt;
-  for (const c of str) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
-  return ((h >>> 0) % 10000) / 10000;
-}
-
-listImages().then(names => {
-  names.filter(n => EXT.test(n)).sort().forEach(name => {
-    const img = new Image();
-    img.className = 'sticker';
-    img.alt = '';
-    img.src = 'static/' + encodeURIComponent(name);
-    img.style.setProperty('--r', (rand(name, 1) * 24 - 12).toFixed(1) + 'deg');
-    img.style.setProperty('--x', (rand(name, 2) * 20 - 10).toFixed(0) + 'px');
-    img.style.setProperty('--y', (rand(name, 3) * 20 - 10).toFixed(0) + 'px');
-    board.appendChild(img);
-  });
-});
+// scatter the horse sticker over the whole page (stable positions, no jumping on reload)
+(function () {
+  let s = 7; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const doc = document.documentElement;
+  function place() {
+    document.querySelectorAll('.overlay-sticker').forEach(e => e.remove());
+    const w = doc.scrollWidth, h = Math.max(doc.scrollHeight, innerHeight);
+    const n = Math.round((w * h) / 45000);
+    s = 7;
+    for (let i = 0; i < n; i++) {
+      const img = new Image();
+      img.src = 'assets/horse-sticker.png'; img.alt = ''; img.className = 'overlay-sticker';
+      const size = 40 + r() * 40;
+      img.style.width = size + 'px';
+      img.style.left = (r() * (w - size)) + 'px';
+      img.style.top = (r() * (h - size)) + 'px';
+      img.style.transform = 'rotate(' + (r() * 60 - 30).toFixed(0) + 'deg)';
+      document.body.appendChild(img);
+    }
+  }
+  addEventListener('load', place);
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(place, 200); });
+})();
 </script>
 </body>
 </html>
