@@ -35,8 +35,6 @@
   .side.right { right: 0; }
   #wrap { position: fixed; z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%);
           width: clamp(740px, 72.3vw, 1700px); height: clamp(440px, 75.6vh, 1000px); max-width: 94vw; max-height: 92vh; }
-  /* forest backdrop of the window itself: in front of the background image, behind all the window content */
-  .wbg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; z-index: 0; pointer-events: none; }
   #page {
     width: 100%; height: 100%; margin: 0; padding: 12px 14px 20px; position: relative; z-index: 1;
     overflow-y: auto; scrollbar-width: thin; scrollbar-color: #5a5a60 transparent;
@@ -45,6 +43,14 @@
       linear-gradient(160deg, rgba(224,231,245,.22), rgba(132,148,184,.30));
     box-shadow: 0 0 0 1px rgba(20,20,30,.55), 0 0 40px rgba(0,0,20,.35);
   }
+
+
+
+  /* two corner stickers: their centres sit exactly on the main console corners */
+  .corner-sticker { position:absolute; width:clamp(66px, 8vw, 104px); height:auto; z-index:8; pointer-events:none;
+    overflow:visible; filter: drop-shadow(1px 2px 2px rgba(0,0,0,.22)); }
+  .corner-sticker.top-right { top:12px; right:0; transform:translate(50%,-50%) rotate(15deg); opacity:.85; }
+  .corner-sticker.bottom-right { bottom:0; right:0; transform:translate(50%,50%) rotate(30deg); }
 
   /* ---- y2k console chrome ---- */
   .chrome { height: 14px; position: relative; margin-bottom: 8px; border: 1px solid #222;
@@ -97,6 +103,12 @@
   .menu a:hover { background: #14141a; color: #f0f3ff; text-decoration: none; }
 
   .vision .wb { display: grid; grid-template-columns: 200px 1px 1fr; gap: 16px; align-items: start; }
+  .vision::before {
+    content: ""; position: absolute; z-index: 0;
+    left: calc(16px + 200px + 16px + 1px); right: 0; top: 0; bottom: 0;
+    background: url("assets/vision-background.png") center center / cover no-repeat;
+    pointer-events: none;
+  }
   .shot { position: relative; border: 1px solid #25252b; background: #fff; }
   .shot img { display: block; width: 100%; height: 230px; object-fit: cover; object-position: 30% 42%; filter: saturate(.9) contrast(1.05); }
   /* the last-straw meme is recoloured to the pfp's palette: greyscale, then dark -> #4d6b84, mid -> #a4b9cb, light -> near-white (#strawduo) */
@@ -108,12 +120,6 @@
   .headline { text-align: right; font: 17px/1.1 "Trebuchet MS", Verdana, sans-serif; letter-spacing: .04em; text-transform: none; color: #fff; margin: 0 0 10px; }
   .headline em { font-style: normal; color: #dbe6ff; letter-spacing: .14em; text-transform: uppercase; display: block; font-size: 19px; }
   .vision .wb > div:last-child { min-width: 0; container-type: inline-size; }
-  .vision::before {
-    content: ""; position: absolute; z-index: 0;
-    left: calc(16px + 200px + 16px + 1px); right: 0; top: 0; bottom: 0;
-    background: url("assets/vision-background.png") center center / cover no-repeat;
-    pointer-events: none;
-  }
   .vision > .wt, .vision > .wb, .vision > .wf { position: relative; z-index: 1; }
   .vision > .wt { background: linear-gradient(rgba(212,212,216,.72), rgba(134,134,140,.72)); }
   .vision > .wf { background: rgba(90,90,96,.42); }
@@ -209,7 +215,7 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
   .fx .word { opacity: 0; transition: opacity .7s ease-in-out; }
   /* rare smog pull: one continuous photo across left margin, main section and right margin */
-  html.rare .bg, html.andrew .bg, html.rare .wbg, html.andrew .wbg { display: none; }
+  html.rare .bg, html.andrew .bg { display: none; }
   #rare { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: fill; z-index: 0; pointer-events: none; }
   .fx .word { position: absolute; white-space: pre; line-height: .95; font-family: Arial, Helvetica, sans-serif;
               color: rgba(255,255,255,.5); mix-blend-mode: screen; filter: blur(1.5px); }
@@ -253,7 +259,6 @@
 <img class="bg" src="assets/winter-forest.png" alt="">
 
 <div id="wrap">
-<img class="wbg" src="assets/forest.jpg" alt="">
 <div id="page">
   <div class="chrome top">
     <div class="ticker" aria-hidden="true"><div class="track"></div></div>
@@ -322,7 +327,7 @@
       <section class="win" id="about">
         <div class="wt"><span>.// About</span><span class="dots"></span><span class="wc"><i></i><i></i></span></div>
         <div class="wb">
-          <p><span class="k">About me:</span><br>Lorem ipsum dolor sit amet, I like horses consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p><span class="k">About me:</span><br>i'm so lost, you're probably lost, let's all get lost under the city lights tonight</p>
           <p id="friends"><span class="k">Who I'd like to meet:</span><br>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore horses eu fugiat nulla pariatur. Other horse people, excepteur sint occaecat cupidatat non proident.</p>
           <p style="margin:0"><span class="k">Mood:</span> gallop-y &nbsp;&middot;&nbsp; <span class="k">Status:</span> online</p>
         </div>
@@ -359,6 +364,19 @@
 
   <div class="chrome bot"></div>
 </div>
+  <svg class="corner-sticker top-right" viewBox="0 0 104 98" aria-hidden="true">
+    <path d="M52 91 12 51C-7 31 7 5 29 5c11 0 19 6 23 14C56 11 64 5 75 5c22 0 36 26 15 46Z" fill="#fff" stroke="#171717" stroke-width="2.5"/>
+    <text x="52" y="57" text-anchor="middle" font-family="serif" font-size="43" fill="#171717">愛</text>
+  </svg>
+  <svg class="corner-sticker bottom-right" viewBox="0 0 106 98" aria-hidden="true">
+    <g transform="rotate(45 53 49)">
+      <rect x="30" y="1" width="46" height="96" rx="22" fill="#e7e9ec" stroke="#b8bdc3" stroke-width="1.5"/>
+      <rect x="1" y="27" width="104" height="44" rx="21" fill="#f1f2f4" stroke="#c4c8ce" stroke-width="1.5"/>
+      <rect x="31" y="29" width="44" height="40" rx="7" fill="#d9dce1" stroke="#aeb3bb" stroke-width="1.2"/>
+      <path d="M36 34h34v5H36z" fill="#fff" opacity=".72"/>
+      <path d="M8 38h18v22H8zM80 38h18v22H80z" fill="#e2e5e9" opacity=".75"/>
+    </g>
+  </svg>
 </div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
